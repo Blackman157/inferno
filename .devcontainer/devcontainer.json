@@ -1,9 +1,8 @@
 {
-  "name": "Inferno 3D Face Reconstruction",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "name": "INFERNO 3D Face Reconstruction",
   "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".",
+    "dockerfile": "../docker/work39_torch2/Dockerfile",
+    "context": "..",
     "args": {
       "USER": "codespace",
       "USER_ID": "1000",
@@ -25,8 +24,6 @@
       "onAutoForward": "openPreview"
     }
   },
-  "postCreateCommand": "bash setup_inferno.sh",
+  "postCreateCommand": "bash .devcontainer/setup_inferno.sh",
   "remoteUser": "codespace"
 }
-
-
