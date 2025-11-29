@@ -1,29 +1,29 @@
 {
-  "name": "INFERNO 3D Face Reconstruction",
-  "build": {
-    "dockerfile": "../docker/work39_torch2/Dockerfile",
-    "context": "..",
-    "args": {
-      "USER": "codespace",
-      "USER_ID": "1000",
-      "GROUP_ID": "1000"
-    }
-  },
-  "runArgs": ["--gpus", "all"],
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-toolsai.jupyter"
-      ]
-    }
-  },
-  "portsAttributes": {
-    "7860": {
-      "label": "Gradio Interface",
-      "onAutoForward": "openPreview"
-    }
-  },
-  "postCreateCommand": "bash .devcontainer/setup_inferno.sh",
-  "remoteUser": "codespace"
+    "name": "INFERNO 3D Face Reconstruction",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+        "args": {
+            "USER": "vscode",
+            "USER_ID": "1000",
+            "GROUP_ID": "1000"
+        }
+    },
+    "runArgs": ["--gpus", "all"],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-toolsai.jupyter"
+            ]
+        }
+    },
+    "portsAttributes": {
+        "7860": {
+            "label": "Gradio Interface",
+            "onAutoForward": "openPreview"
+        }
+    },
+    "postCreateCommand": "pip install --upgrade pip && pip install gradio matplotlib Pillow opencv-python torch torchvision torchaudio numpy",
+    "remoteUser": "vscode"
 }
