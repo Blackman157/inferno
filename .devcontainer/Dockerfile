@@ -1,19 +1,20 @@
-# Базовый образ с CUDA для GPU
-FROM nvidia/cuda:12.2.1-cudnn8-runtime-ubuntu22.04
+# Используем аргумент VARIANT для версии Ubuntu
+ARG VARIANT=22.04
+FROM nvidia/cuda:12.2.1-cudnn8-runtime-ubuntu${VARIANT}
 
-# Установка базовых пакетов
-RUN apt-get update && apt-get install -y \
-    python3.10 python3.10-venv python3.10-dev python3-pip git curl wget build-essential \
+# Основные утилиты
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 python3-pip python3-venv git curl wget build-essential ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Создаем виртуальное окружение
-RUN python3.10 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Установка последней версии pip
+RUN python3 -m pip install --upgrade pip
 
-# Обновляем pip и устанавливаем зависимости
-RUN pip install --upgrade pip
-RUN pip install numpy==1.26.4 \
-    torch==2.2.2+cu118 torchvision==0.17.2+cu118 torchaudio==2.2.2+cu118 \
-    opencv-python matplotlib Pillow scikit-image tqdm numba gradio
+# Создание рабочей директории
+WORKDIR /workspace
 
-WORKDIR /workspaces/inferno
+# Копирование файлов проекта (если нужно)
+# COPY . /workspace
+
+# По желанию, установка зависимостей проекта
+# RUN pip install -r requirements.txt
