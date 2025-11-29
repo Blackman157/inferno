@@ -1,35 +1,32 @@
 {
-    "name": "inferno-ubuntu",
-    "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
-    "features": {
-        "ghcr.io/devcontainers/features/python:1": {
-            "version": "3.10"
-        }
-    },
-    "build": {
-        "dockerfile": "../docker/work39_torch2/Dockerfile",
-        "context": "..",
-        "args": {
-            "USER": "codespace",
-            "USER_ID": "1000",
-            "GROUP_ID": "1000"
-        }
-    },
-    "runArgs": ["--gpus", "all"],
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-python.python",
-                "ms-toolsai.jupyter"
-            ]
-        }
-    },
-    "portsAttributes": {
-        "7860": {
-            "label": "Gradio Interface",
-            "onAutoForward": "openPreview"
-        }
-    },
-    "postCreateCommand": "apt update && apt install -y ffmpeg libgl1 unzip cmake build-essential && pip install --upgrade pip && pip install gradio matplotlib Pillow opencv-python torch==2.2.2+cu118 torchvision==0.17.2 torchaudio==2.2.2 numpy==1.26.4",
-    "remoteUser": "codespace"
+  "name": "Inferno 3D Face Reconstruction",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {
+      "USER": "codespace",
+      "USER_ID": "1000",
+      "GROUP_ID": "1000"
+    }
+  },
+  "runArgs": ["--gpus", "all"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "7860": {
+      "label": "Gradio Interface",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postCreateCommand": "bash setup_inferno.sh",
+  "remoteUser": "codespace"
 }
+
+
