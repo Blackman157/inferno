@@ -1,20 +1,29 @@
-# Используем аргумент VARIANT для версии Ubuntu
-ARG VARIANT=22.04
-FROM nvidia/cuda:12.2.1-cudnn8-runtime-ubuntu${VARIANT}
+# Базовый образ Python 3.11
+FROM python:3.11-slim
 
-# Основные утилиты
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 python3-pip python3-venv git curl wget build-essential ca-certificates \
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    build-essential \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Установка последней версии pip
-RUN python3 -m pip install --upgrade pip
-
-# Создание рабочей директории
+# Создаем рабочую папку
 WORKDIR /workspace
 
-# Копирование файлов проекта (если нужно)
-# COPY . /workspace
+# Установка Python-библиотек
+# Используем CPU-версию torch
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN pip install --no-cache-dir opencv-python matplotlib pillow numpy scikit-image tqdm
 
-# По желанию, установка зависимостей проекта
-# RUN pip install -r requirements.txt
+# Клонируем inferno
+RUN git clone https://github.com/YadiraF/Inferno.git /workspace/inferno
+
+# Установка зависимостей inferno
+RUN pip install --no-cache-dir -r /workspace/inferno/requirements.txt
+
+# По умолчанию открываем рабочую папку
+WORKDIR /workspace/inferno
