@@ -1,29 +1,27 @@
 {
-    "name": "INFERNO 3D Face Reconstruction",
+    "name": "Inferno GPU DevContainer",
     "build": {
         "dockerfile": "Dockerfile",
         "context": ".",
         "args": {
-            "USER": "vscode",
-            "USER_ID": "1000",
-            "GROUP_ID": "1000"
+            "VARIANT": "22.04"
         }
     },
     "runArgs": ["--gpus", "all"],
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-python.python",
-                "ms-toolsai.jupyter"
-            ]
+    "remoteUser": "root",
+    "workspaceFolder": "/workspace",
+    "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.11"
         }
     },
-    "portsAttributes": {
-        "7860": {
-            "label": "Gradio Interface",
-            "onAutoForward": "openPreview"
-        }
-    },
-    "postCreateCommand": "pip install --upgrade pip && pip install gradio matplotlib Pillow opencv-python torch torchvision torchaudio numpy",
-    "remoteUser": "vscode"
+    "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-vscode.cpptools"
+    ],
+    "settings": {
+        "python.pythonPath": "/usr/bin/python3"
+    }
 }
+
