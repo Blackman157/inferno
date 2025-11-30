@@ -1,0 +1,28 @@
+name: inferno_cpu
+channels:
+- pytorch
+- conda-forge
+dependencies:
+- python=3.10
+- pip
+- numpy
+- scipy
+- matplotlib
+- scikit-image
+- scikit-learn
+- tqdm
+- cmake
+- ffmpeg
+- libgcc
+- pip:
+- torch
+- torchvision
+- torchaudio
+- onnxruntime
+- insightface
+- opencv-python
+- trimesh
+- pyrender
+- kornia
+- yacs
+- face-alignment
