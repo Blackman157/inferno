@@ -1,22 +1,33 @@
-# Используем официальный образ Dev Containers с Python 3.10
-# (вы можете выбрать другую версию, если ваш проект требует этого)
-FROM mcr.microsoft.com/devcontainers/python:3.10
+# Использование образа с Mamba/Conda
+FROM mcr.microsoft.com/devcontainers/miniconda:latest
 
-# Установка системных зависимостей
-# В проектах NLP иногда нужны определенные системные пакеты
+# Установка системных зависимостей (требуется для компиляции некоторых пакетов, например, PyTorch3D)
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     git \
     build-essential \
-    # Добавьте сюда другие пакеты, если они нужны для PyTorch или других библиотек
+    libgl1-mesa-glx \
+    # Установка других пакетов, если они необходимы для PyTorch3D или SMAL
+    
+# Переход в рабочую директорию
+WORKDIR /workspaces/inferno
 
-# Установка зависимостей Python
-# Копируем requirements.txt и устанавливаем библиотеки
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+# Копирование файла требований PyTorch (мы используем более свежую версию 3.9)
+COPY requirements39_torch.txt /tmp/requirements.txt
 
-# Установка самого проекта Inferno
-# Используется, если проект содержит модули, которые нужно импортировать
+# Установка Conda окружения
+# В этом проекте рекомендуется использовать Mamba (ускоренная версия Conda)
+# Установка зависимостей из requirements.txt
+RUN mamba create -n inferno_env python=3.9 -y \
+    && echo "conda activate inferno_env" >> ~/.bashrc \
+    && mamba install -n inferno_env --file /tmp/requirements.txt -y \
+    && mamba clean -afy
+    
+# Активация среды для последующих команд
+SHELL ["conda", "run", "-n", "inferno_env", "/bin/bash", "-c"]
+
+# Установка самого проекта (если это пакет Python)
+# Если есть файл setup.py, используйте:
 # RUN pip install -e .
 
 # Определение пользователя для Codespaces
