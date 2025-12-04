@@ -1,3 +1,4 @@
+COPY requirements.txt /tmp/requirements.txt
 # Использование образа с Mamba/Conda
 FROM mcr.microsoft.com/devcontainers/miniconda:latest
 
