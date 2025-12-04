@@ -1,17 +1,34 @@
 {
-"name": "inferno-cpu",
-"image": "mcr.microsoft.com/devcontainers/python:3.10",
-"features": {
-"ghcr.io/devcontainers/features/git:1": {},
-"ghcr.io/devcontainers/features/common-utils:2": {}
-},
-"postCreateCommand": "pip install --upgrade pip && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu",
-"customizations": {
-"vscode": {
-"extensions": [
-"ms-python.python",
-"ms-toolsai.jupyter"
-]
-}
-}
+  "name": "Inferno Multi-Service Environment",
+  
+  // *** Главное отличие! Мы указываем Codespaces использовать docker-compose.yml ***
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  
+  // Указываем, какой сервис из docker-compose.yml будет основным
+  // (Например, 'app' или 'web', это нужно проверить в вашем файле compose)
+  "service": "web", 
+  
+  // Рабочая директория (обычно та, где находится код)
+  "workspaceFolder": "/app", 
+  
+  // Пробрасываем порты. Проверьте ваш docker-compose.yml, какие порты использует web-сервис
+  "forwardPorts": [8000, 5432],
+  
+  // Настройки VS Code для работы с Python и Docker
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python", // Для разработки на Python
+        "ms-azuretools.vscode-docker", // Для удобного управления Docker
+        "eamodio.gitlens" // Для детализации и эмоций в Git
+      ]
+    }
+  },
+
+  // *** Команда После Создания: Настройка Среды (Обязательно для проектов с DB) ***
+  "postCreateCommand": "echo 'Установка зависимостей и запуск миграций...' && pip install -r requirements.txt && python manage.py migrate",
+  
+  "remoteUser": "vscode"
 }
