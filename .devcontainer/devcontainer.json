@@ -1,23 +1,25 @@
 {
-    "name": "Inferno (Emotion Recognition) Environment",
+    "name": "Inferno (3D Faces/FLAME) Environment",
     "build": {
         "dockerfile": "Dockerfile",
         "context": "."
     },
-    // Установка полезных расширений для работы с Python и NLP
     "customizations": {
         "vscode": {
             "settings": {
-                "python.defaultInterpreterPath": "/usr/local/bin/python",
-                "python.formatting.provider": "black"
+                // Убедитесь, что VS Code использует интерпретатор Conda
+                "python.defaultInterpreterPath": "/opt/conda/envs/inferno_env/bin/python"
             },
             "extensions": [
                 "ms-python.python",
-                "ms-python.vscode-pylance",
-                "ms-toolsai.jupyter" // Полезно для работы с данными и моделями NLP
+                "ms-python.vscode-pylance"
             ]
         }
     },
-    // Выполнение команд после создания контейнера (например, для загрузки моделей)
-    "postCreateCommand": "echo 'Codespace is ready. Run your Python scripts now!'"
+    // Активация Conda среды при запуске Codespace
+    "containerEnv": {
+        "PATH": "/opt/conda/envs/inferno_env/bin:${containerEnv:PATH}"
+    },
+    // Команда, которая гарантирует, что среда активирована при входе
+    "postCreateCommand": "conda activate inferno_env"
 }
