@@ -1,25 +1,21 @@
 {
-    "name": "Inferno (3D Faces/FLAME) Environment",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": "."
-    },
-    "customizations": {
-        "vscode": {
-            "settings": {
-                // Убедитесь, что VS Code использует интерпретатор Conda
-                "python.defaultInterpreterPath": "/opt/conda/envs/inferno_env/bin/python"
-            },
-            "extensions": [
-                "ms-python.python",
-                "ms-python.vscode-pylance"
-            ]
-        }
-    },
-    // Активация Conda среды при запуске Codespace
-    "containerEnv": {
-        "PATH": "/opt/conda/envs/inferno_env/bin:${containerEnv:PATH}"
-    },
-    // Команда, которая гарантирует, что среда активирована при входе
-    "postCreateCommand": "conda activate inferno_env"
+  "name": "INFERNO Python 3.11",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+
+  "updateContentCommand": "pip install --upgrade pip && pip install -r requirements.txt",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+
+  "postAttachCommand": "echo 'Container ready.'",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  }
 }
