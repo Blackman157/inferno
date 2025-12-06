@@ -1,17 +1,21 @@
 {
-"name": "inferno-cpu",
-"image": "mcr.microsoft.com/devcontainers/python:3.10",
-"features": {
-"ghcr.io/devcontainers/features/git:1": {},
-"ghcr.io/devcontainers/features/common-utils:2": {}
-},
-"postCreateCommand": "pip install --upgrade pip && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu",
-"customizations": {
-"vscode": {
-"extensions": [
-"ms-python.python",
-"ms-toolsai.jupyter"
-]
-}
-}
+  "name": "INFERNO Python 3.11",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+
+  "updateContentCommand": "pip install --upgrade pip && pip install -r requirements.txt",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+
+  "postAttachCommand": "echo 'Container ready.'",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  }
 }
