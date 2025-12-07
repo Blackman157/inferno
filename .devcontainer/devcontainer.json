@@ -1,14 +1,8 @@
 {
-  "name": "INFERNO Python 3.11",
-  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "name": "Inferno Codespace",
+  "image": "mcr.microsoft.com/devcontainers/python:3.10",
 
-  "updateContentCommand": "pip install --upgrade pip && pip install -r requirements.txt",
-
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {}
-  },
-
-  "postAttachCommand": "echo 'Container ready.'",
+  "postCreateCommand": "pip install --upgrade pip",
 
   "customizations": {
     "vscode": {
